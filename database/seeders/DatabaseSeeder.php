@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Kategori;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Database\Seeders\JurusanSeeder;
+use Database\Seeders\AngkatanSeeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -17,16 +19,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $pengguna =
-            // User::factory(10)->create();
-            $this->call([CategorySeeder::class, UserSeeder::class]);
-        Post::factory(100)->recycle(
-            [
-                Kategori::all(),
-                User::All()
-            ]
-        )->create();
-        // $this->call(PostSeeder::class);
+        // $pengguna =
+        //     // User::factory(10)->create();
+        //     $this->call([CategorySeeder::class, UserSeeder::class]);
+        // Post::factory(100)->recycle(
+        //     [
+        //         Kategori::all(),
+        //         User::All()
+        //     ]
+        // )->create();
+        $this->call(AngkatanSeeder::class);
+        $this->call(JurusanSeeder::class);
+        $this->call(AlumniSeeder::class);
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

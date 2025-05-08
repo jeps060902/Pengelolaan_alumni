@@ -11,16 +11,18 @@ use Illuminate\Support\Facades\Route;
 //     return view('Home', ['title' => 'Home Page']);
 // });
 
-Route::resource('/', AlumniController::class);
+Route::get('/', [AlumniController::class, 'index']);
+Route::get('/Alumni', [AlumniController::class, 'Alumni'])->name('Alumni.Alumni');
+Route::post('/tambah_alumni', [AlumniController::class, 'Tambah']);
 
 
 // Route::get('/About', function () {
 //     return view('About', ['title' => 'About', 'page' => 'About']);
 // });
-// Route::get('/Posts', function () {
-//     $Post = Post::latest()->get();
-//     return view('Posts', ['title' => 'Blog', 'page' => 'Blog', 'posts' => $Post]);
-// });
+Route::get('/Posts', function () {
+    $Post = Post::latest()->get();
+    return view('Posts', ['title' => 'Blog', 'page' => 'Blog', 'posts' => $Post]);
+});
 
 // Route::get('/Posts/{post:slug}', function (post $post) {
 //     // $post = Post::find($id);

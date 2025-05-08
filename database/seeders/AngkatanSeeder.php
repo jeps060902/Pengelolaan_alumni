@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Angkatan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,10 @@ class AngkatanSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        for ($tahun = 2014; $tahun <= 2025; $tahun++) {
+            Angkatan::create([
+                'Tahun' => (string) $tahun, // Pastikan $tahun adalah string
+            ]);
+        }
     }
 }
