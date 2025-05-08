@@ -43,6 +43,6 @@ class AlumniController extends Controller
             'jurusan_id' => $request->jurusan,
             'angkatan_id' => $request->angkatan,
         ]);
-        return redirect()->route('products.index');
+        return redirect()->route('Alumni.Alumni');
     }
 }
