@@ -53,7 +53,7 @@
 
 <div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="/edit_alumni" method="POST">
+        <form id="formEditAlumni" method="POST">
             @csrf
             @method('PUT')
             <input type="hidden" name="id" id="edit-id">

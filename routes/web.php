@@ -15,6 +15,7 @@ Route::get('/', [AlumniController::class, 'index']);
 Route::get('/Alumni', [AlumniController::class, 'Alumni'])->name('Alumni.Alumni');
 Route::post('/tambah_alumni', [AlumniController::class, 'Tambah']);
 Route::delete('/hapus_alumni/{id}', [AlumniController::class, 'hapus'])->name('Alumni.hapus');
+Route::put('/edit_alumni/{id}', [AlumniController::class, 'update']);
 
 
 // Route::get('/About', function () {

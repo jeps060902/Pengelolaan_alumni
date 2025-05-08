@@ -48,6 +48,8 @@
                 document.getElementById('edit-nama').value = this.dataset.nama;
                 document.getElementById('edit-jurusan').value = this.dataset.jurusan;
                 document.getElementById('edit-angkatan').value = this.dataset.angkatan;
+                const form = document.getElementById('formEditAlumni');
+                form.action = `/edit_alumni/${id}`;
             });
         });
 

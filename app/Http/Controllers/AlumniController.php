@@ -35,4 +35,14 @@ class AlumniController extends Controller
         Alumni::findOrFail($id)->delete();
         return redirect()->route('Alumni.Alumni');
     }
+    public function update(Request $request, $id)
+    {
+        $alumni = Alumni::findOrFail($id);
+        $alumni->update([
+            'nama' => $request->nama,
+            'jurusan_id' => $request->jurusan,
+            'angkatan_id' => $request->angkatan,
+        ]);
+        return redirect()->route('products.index');
+    }
 }
