@@ -36,6 +36,32 @@
             $('#example').DataTable();
         });
     </script>
+    <script>
+        document.querySelectorAll('.badgeEdit-grad').forEach(button => {
+            button.addEventListener('click', function() {
+                let id = this.dataset.id;
+                let nama = this.dataset.nama;
+                let jurusan = this.dataset.jurusan
+                let angkatan = this.dataset.angkatan
+                console.log(id, nama, jurusan, angkatan)
+                document.getElementById('edit-id').value = this.dataset.id;
+                document.getElementById('edit-nama').value = this.dataset.nama;
+                document.getElementById('edit-jurusan').value = this.dataset.jurusan;
+                document.getElementById('edit-angkatan').value = this.dataset.angkatan;
+            });
+        });
+
+        document.querySelectorAll('.badgeHapus-grad').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id;
+                document.getElementById('hapus-id').value = id;
+
+                // Set form action dengan ID
+                const form = document.getElementById('formHapusAlumni');
+                form.action = `/hapus_alumni/${id}`;
+            });
+        });
+    </script>
     <!-- Inisialisasi DataTables -->
 
 </body>

@@ -30,4 +30,9 @@ class AlumniController extends Controller
         ]);
         return redirect()->route('Alumni.Alumni');
     }
+    public function hapus($id)
+    {
+        Alumni::findOrFail($id)->delete();
+        return redirect()->route('Alumni.Alumni');
+    }
 }

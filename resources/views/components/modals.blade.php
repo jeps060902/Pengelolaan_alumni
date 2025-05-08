@@ -50,3 +50,70 @@
     </div>
 </div>
 </div>
+
+<div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/edit_alumni" method="POST">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="id" id="edit-id">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Alumni</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="nama" id="edit-nama" class="form-control mb-2">
+
+                    <select name="jurusan" id="edit-jurusan" class="form-select mb-2">
+                        <option value="" selected disabled>--Pilih Jurusan--</option>
+                        <option value="1">RPL</option>
+                        <option value="2">Akuntansi</option>
+                        <option value="3">Perhotelan</option>
+                    </select>
+                    <select name="angkatan" id="edit-angkatan" class="form-select">
+                        <option selected>--Pilih Tahun--</option>
+                        <option value="1">2013</option>
+                        <option value="2">2014</option>
+                        <option value="3">2015</option>
+                        <option value="4">2016</option>
+                        <option value="5">2017</option>
+                        <option value="6">2018</option>
+                        <option value="7">2019</option>
+                        <option value="8">2020</option>
+                        <option value="9">2021</option>
+                        <option value="10">2022</option>
+                        <option value="11">2023</option>
+                        <option value="12">2024</option>
+                        <option value="13">2025</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="formHapusAlumni" method="POST">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" name="id" id="hapus-id">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Yakin ingin menghapus data ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
