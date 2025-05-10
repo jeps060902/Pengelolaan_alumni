@@ -8,8 +8,6 @@ use App\Models\User;
 use App\Models\Kategori;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Database\Seeders\JurusanSeeder;
-use Database\Seeders\AngkatanSeeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -28,8 +26,7 @@ class DatabaseSeeder extends Seeder
         //         User::All()
         //     ]
         // )->create();
-        $this->call(AngkatanSeeder::class);
-        $this->call(JurusanSeeder::class);
+    
         $this->call(AlumniSeeder::class);
         // User::factory()->create([
         //     'name' => 'Test User',

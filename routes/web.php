@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PrestasiController;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Kategori;
@@ -11,20 +13,24 @@ use Illuminate\Support\Facades\Route;
 //     return view('Home', ['title' => 'Home Page']);
 // });
 
-Route::get('/', [AlumniController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 Route::get('/Alumni', [AlumniController::class, 'Alumni'])->name('Alumni.Alumni');
 Route::post('/tambah_alumni', [AlumniController::class, 'Tambah']);
 Route::delete('/hapus_alumni/{id}', [AlumniController::class, 'hapus'])->name('Alumni.hapus');
 Route::put('/edit_alumni/{id}', [AlumniController::class, 'update']);
 
+Route::get('/Prestasi', [PrestasiController::class, 'index'])->name('Prestasi.Prestasi');
+Route::get('/prestasi/{id}', [PrestasiController::class, 'index'])->name('Prestasi.show');
+Route::post('/tambah_prestasi', [PrestasiController::class, 'Tambah'])->name('Prestasi.tambah');
+
 
 // Route::get('/About', function () {
 //     return view('About', ['title' => 'About', 'page' => 'About']);
 // });
-Route::get('/Posts', function () {
-    $Post = Post::latest()->get();
-    return view('Posts', ['title' => 'Blog', 'page' => 'Blog', 'posts' => $Post]);
-});
+// Route::get('/Posts', function () {
+//     $Post = Post::latest()->get();
+//     return view('Posts', ['title' => 'Blog', 'page' => 'Blog', 'posts' => $Post]);
+// });
 
 // Route::get('/Posts/{post:slug}', function (post $post) {
 //     // $post = Post::find($id);

@@ -3,30 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumni;
-use App\Models\Jurusan;
-use App\Models\Angkatan;
 use Illuminate\Http\Request;
 
 class AlumniController extends Controller
 {
-    public function index()
-    {
-        return view('Home', ['title' => 'Home Page']);
-    }
 
-    public function Alumni()
+
+    public function Alumni(Request $request)
     {
-        $angkatans = Angkatan::all();
-        $jurusans = Jurusan::all();
-        $Alumni = Alumni::all();
-        return view('Alumni', ['title' => 'Alumni Page', 'alumni' => $Alumni, 'angkatan' => $angkatans, 'jurusan' => $jurusans]);
+        $query = Alumni::query();
+
+        if ($request->filled('jurusan')) {
+            $query->where('jurusan', $request->jurusan);
+        }
+
+        if ($request->filled('angkatan')) {
+            $query->where('angkatan', $request->angkatan);
+        }
+
+        $Alumni = $query->get();
+        return view('Alumni.Alumni', [
+            'title' => 'Data Alumni',
+            'alumni' => $Alumni,
+            'angkatan' => Alumni::select('angkatan')->distinct()->get(),
+            'jurusan' => Alumni::select('jurusan')->distinct()->get(),
+        ]);
     }
     public function Tambah(Request $request)
     {
         Alumni::create([
-            'nama' => $request->nama,
-            'jurusan_id' => $request->jurusan,
-            'angkatan_id' => $request->angkatan,
+            'Nama' => $request->nama,
+            'jurusan' => $request->jurusan,
+            'angkatan' => $request->angkatan,
         ]);
         return redirect()->route('Alumni.Alumni');
     }
@@ -39,9 +47,9 @@ class AlumniController extends Controller
     {
         $alumni = Alumni::findOrFail($id);
         $alumni->update([
-            'nama' => $request->nama,
-            'jurusan_id' => $request->jurusan,
-            'angkatan_id' => $request->angkatan,
+            'Nama' => $request->nama,
+            'jurusan' => $request->jurusan,
+            'angkatan' => $request->angkatan,
         ]);
         return redirect()->route('Alumni.Alumni');
     }

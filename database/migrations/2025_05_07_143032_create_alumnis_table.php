@@ -14,14 +14,8 @@ return new class extends Migration
         Schema::create('alumnis', function (Blueprint $table) {
             $table->id();
             $table->string('Nama');
-            $table->foreignId('angkatan_id')->constrained(
-                table: 'angkatans',
-                indexName: 'angkatans_id'
-            );
-            $table->foreignId('jurusan_id')->constrained(
-                table: 'jurusans',
-                indexName: 'Jurusans_id'
-            );
+            $table->integer('angkatan');
+            $table->string('jurusan');
             $table->timestamps();
         });
     }

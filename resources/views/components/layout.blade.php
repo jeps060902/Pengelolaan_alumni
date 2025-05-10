@@ -63,6 +63,17 @@
                 form.action = `/hapus_alumni/${id}`;
             });
         });
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('modalTambahPrestasi');
+            modal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+
+                document.getElementById('inputAlumniId').value = button.getAttribute('data-id');
+                document.getElementById('inputNama').value = button.getAttribute('data-nama');
+                document.getElementById('inputJurusan').value = button.getAttribute('data-jurusan');
+                document.getElementById('inputAngkatan').value = button.getAttribute('data-angkatan');
+            });
+        });
     </script>
     <!-- Inisialisasi DataTables -->
 
