@@ -22,6 +22,8 @@ Route::put('/edit_alumni/{id}', [AlumniController::class, 'update']);
 Route::get('/Prestasi', [PrestasiController::class, 'index'])->name('Prestasi.Prestasi');
 Route::get('/prestasi/{id}', [PrestasiController::class, 'index'])->name('Prestasi.show');
 Route::post('/tambah_prestasi', [PrestasiController::class, 'Tambah'])->name('Prestasi.tambah');
+Route::delete('/hapus_prestasi/{id}', [PrestasiController::class, 'hapus'])->name('Prestasi.hapus');
+Route::put('/edit_prestasi/{id}', [PrestasiController::class, 'update']);
 
 
 // Route::get('/About', function () {

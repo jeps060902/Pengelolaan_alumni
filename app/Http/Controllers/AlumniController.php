@@ -12,7 +12,6 @@ class AlumniController extends Controller
     public function Alumni(Request $request)
     {
         $query = Alumni::query();
-
         if ($request->filled('jurusan')) {
             $query->where('jurusan', $request->jurusan);
         }

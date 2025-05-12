@@ -17,10 +17,8 @@
     <div class="min-h-full">
         <x-navbar></x-navbar>
         <x-header>{{ $title }}</x-header>
-
-
         <main>
-            <div class="bg-slate-200 mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="container">
                 {{ $slot }}
             </div>
         </main>
@@ -72,6 +70,39 @@
                 document.getElementById('inputNama').value = button.getAttribute('data-nama');
                 document.getElementById('inputJurusan').value = button.getAttribute('data-jurusan');
                 document.getElementById('inputAngkatan').value = button.getAttribute('data-angkatan');
+            });
+        });
+
+
+        document.querySelectorAll('#button-edit').forEach(button => {
+            button.addEventListener('click', function() {
+                let id = this.dataset.id;
+                let nama = this.dataset.nama;
+                let prestasi = this.dataset.prestasi;
+                let grade = this.dataset.grade;
+                let jurusan = this.dataset.jurusan
+                let angkatan = this.dataset.angkatan
+                console.log(id, nama, jurusan, angkatan)
+                document.getElementById('inputAlumniId').value = id;
+                document.getElementById('inputNama').value = nama;
+                document.getElementById('inputJurusan').value = jurusan;
+                document.getElementById('inputAngkatan').value = angkatan;
+                document.getElementById('inputPrestasi').value = prestasi;
+                document.getElementById('inputGrade').value = grade;
+                const form = document.getElementById('formEditPrestasi');
+                form.action = `/edit_prestasi/${id}`;
+            });
+        });
+        document.querySelectorAll('.btn-hapus').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.idprestasi;
+                document.getElementById('hapus-id').value = id;
+
+                const form = document.getElementById('formHapusPrestasi');
+                form.action = `/hapus_prestasi/${id}`; // Ini yang penting
+
+                console.log("ID:", id);
+                console.log("Form action:", form.action);
             });
         });
     </script>

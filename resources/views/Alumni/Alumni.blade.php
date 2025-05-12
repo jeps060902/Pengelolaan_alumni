@@ -21,9 +21,10 @@
             </tr>
         </thead>
         <tbody>
+            <?php $no = 1; ?>
             @foreach ($alumni as $a)
                 <tr>
-                    <th scope="row">3</th>
+                    <th scope="row">{{ $no++ }}</th>
                     <td>{{ $a->Nama }}</td>
                     <td>{{ $a->angkatan }}</td>
                     <td>{{ $a->jurusan }}</td>
