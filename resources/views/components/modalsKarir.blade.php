@@ -86,7 +86,7 @@
                     <p style="color:red; font-size:10px">noted : kosongkan jika masih bekerja</p>
                     <div class="input-group mb-3">
                         <select class="form-select" id="inputGroupSelect01" name="tahun_selesai">
-                            <option selected>--Pilih Tahun Selesai--</option>
+                            <option value="" selected>--Pilih Tahun Selesai--</option>
                             <option value="2013">2013</option>
                             <option value="2014">2014</option>
                             <option value="2015">2015</option>
