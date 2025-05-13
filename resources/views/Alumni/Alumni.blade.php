@@ -17,6 +17,7 @@
                 <th scope="col">Tahun</th>
                 <th scope="col">Jurusan</th>
                 <th scope="col">Prestasi</th>
+                <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -31,6 +32,28 @@
                     <td>
                         @if ($a->prestasi->count() >= 1)
                             <a href="{{ route('Prestasi.show', $a->id) }}">lihat prestasi</a>
+                        @else
+                            <button type="button" class="badgeTambah-grad" data-bs-toggle="modal"
+                                data-bs-target="#modalTambahPrestasi" data-id="{{ $a->id }}"
+                                data-nama="{{ $a->Nama }}" data-jurusan="{{ $a->jurusan }}"
+                                data-angkatan="{{ $a->angkatan }}">
+                                tambah
+                            </button>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($a->karir->count() >= 1)
+                            @foreach ($a->karir as $karir)
+                                <p>
+                                    <a href="{{ route('Karir.show', $a->id) }}">
+                                        @if ($karir->status == 1)
+                                            Kuliah
+                                        @else
+                                            Kerja
+                                        @endif
+                                    </a>
+                                </p>
+                            @endforeach
                         @else
                             <button type="button" class="badgeTambah-grad" data-bs-toggle="modal"
                                 data-bs-target="#modalTambahPrestasi" data-id="{{ $a->id }}"

@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AlumniController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PrestasiController;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Kategori;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KarirController;
+use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\PrestasiController;
 
 
 // Route::get('/', function () {
@@ -25,6 +26,9 @@ Route::post('/tambah_prestasi', [PrestasiController::class, 'Tambah'])->name('Pr
 Route::delete('/hapus_prestasi/{id}', [PrestasiController::class, 'hapus'])->name('Prestasi.hapus');
 Route::put('/edit_prestasi/{id}', [PrestasiController::class, 'update']);
 
+Route::get('/Karir', [KarirController::class, 'index'])->name('Karir.Karir');
+Route::post('/tambah_karir', [KarirController::class, 'Tambah'])->name('Karir.tambah');
+Route::get('/karir/{id}', [KarirController::class, 'index'])->name('Karir.show');
 
 // Route::get('/About', function () {
 //     return view('About', ['title' => 'About', 'page' => 'About']);

@@ -15,17 +15,17 @@ class AlumniSeeder extends Seeder
     {
         Alumni::create([
             'Nama' => 'Jeps',
-            'angkatan' => '1',
-            'Jurusan' => 'RPL',
+            'angkatan' => '2013',
+            'Jurusan' => 'PPLG',
         ]);
         Alumni::create([
-            'Nama' => 'Jeps',
-            'angkatan' => '1',
+            'Nama' => 'Agus',
+            'angkatan' => '2014',
             'Jurusan' => 'Akuntansi',
         ]);
         Alumni::create([
-            'Nama' => 'Jeps',
-            'angkatan' => '1',
+            'Nama' => 'TungTung Sahur',
+            'angkatan' => '2015',
             'Jurusan' => 'Perhotelan',
         ]);
     }
