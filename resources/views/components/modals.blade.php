@@ -107,7 +107,7 @@
         <form id="formHapusAlumni" method="POST">
             @csrf
             @method('DELETE')
-            <input type="hidden" name="id" id="hapus-id">
+            <input type="" name="id" v-model="id_edit" id="hapus-id">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Konfirmasi Hapus</h5>

@@ -49,7 +49,7 @@ class AlumniController extends Controller
 
         // Simpan data jika validasi lolos
         $alumni = Alumni::create([
-            'Nama' => $request->nama,
+            'nama' => $request->nama,
             'jurusan' => $request->jurusan,
             'angkatan' => $request->angkatan,
         ]);
@@ -61,14 +61,38 @@ class AlumniController extends Controller
         Alumni::findOrFail($id)->delete();
         return redirect()->route('Alumni.Alumni');
     }
-    public function update(Request $request, $id)
+    public function show($id)
     {
         $alumni = Alumni::findOrFail($id);
-        $alumni->update([
-            'Nama' => $request->nama,
-            'jurusan' => $request->jurusan,
-            'angkatan' => $request->angkatan,
+        return new AlumniResource(true, 'Alumni Berhasil kirim', $alumni);
+    }
+    public function update(Request $request, $id)
+    {
+        $alumni = Alumni::find($id);
+
+        if (!$alumni) {
+            return response()->json(['message' => 'Data alumni tidak ditemukan'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string|max:255',
+            'jurusan' => 'required|string|max:100',
+            'angkatan' => 'required|integer|min:2000|max:' . (date('Y') + 5),
         ]);
-        return redirect()->route('Alumni.Alumni');
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi Gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $alumni->update([
+            'nama' => $request->input('nama'), // bukan $request->Nama
+            'jurusan' => $request->input('jurusan'),
+            'angkatan' => $request->input('angkatan'),
+        ]);
+        return new AlumniResource(true, 'Alumni Berhasil diedit', $alumni);
     }
 }

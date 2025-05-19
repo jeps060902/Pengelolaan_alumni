@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Alumni extends Model
 {
-    protected $fillable = ['Nama', 'angkatan', 'jurusan'];
+    protected $fillable = ['nama', 'angkatan', 'jurusan'];
     protected $with = ['prestasi', 'karir'];
     public function prestasi(): HasMany
     {
