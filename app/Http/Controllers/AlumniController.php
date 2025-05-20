@@ -56,20 +56,12 @@ class AlumniController extends Controller
 
         return new AlumniResource(true, 'Alumni Berhasil Ditambahkan', $alumni);
     }
-    public function hapus($id)
+    public function destroy($id)
     {
-        Alumni::findOrFail($id)->delete();
-        return redirect()->route('Alumni.Alumni');
+        $alumni = Alumni::findOrFail($id)->delete();
+        return new AlumniResource(true, 'Alumni Berhasil Dihapus', $alumni);
     }
     public function show($id)
-<<<<<<< HEAD
-    {
-        $alumni = Alumni::findOrFail($id);
-        return new AlumniResource(true, 'Detail data alumni', $alumni);
-    }
-    public function update(Request $request, $id)
-=======
->>>>>>> 10e11a895d6e9c6f2b2a652f6bbb2c183eac2694
     {
         $alumni = Alumni::findOrFail($id);
         return new AlumniResource(true, 'Alumni Berhasil kirim', $alumni);
@@ -87,8 +79,6 @@ class AlumniController extends Controller
             'jurusan' => 'required|string|max:100',
             'angkatan' => 'required|integer|min:2000|max:' . (date('Y') + 5),
         ]);
-<<<<<<< HEAD
-=======
 
         if ($validator->fails()) {
             return response()->json([
@@ -103,7 +93,6 @@ class AlumniController extends Controller
             'jurusan' => $request->input('jurusan'),
             'angkatan' => $request->input('angkatan'),
         ]);
->>>>>>> 10e11a895d6e9c6f2b2a652f6bbb2c183eac2694
         return new AlumniResource(true, 'Alumni Berhasil diedit', $alumni);
     }
 }
