@@ -61,6 +61,11 @@ class AlumniController extends Controller
         Alumni::findOrFail($id)->delete();
         return redirect()->route('Alumni.Alumni');
     }
+    public function show($id)
+    {
+        $alumni = Alumni::findOrFail($id);
+        return new AlumniResource(true, 'Detail data alumni', $alumni);
+    }
     public function update(Request $request, $id)
     {
         $alumni = Alumni::findOrFail($id);
@@ -69,6 +74,6 @@ class AlumniController extends Controller
             'jurusan' => $request->jurusan,
             'angkatan' => $request->angkatan,
         ]);
-        return redirect()->route('Alumni.Alumni');
+        return new AlumniResource(true, 'Alumni Berhasil diedit', $alumni);
     }
 }
