@@ -11,24 +11,11 @@ class AlumniController extends Controller
 {
 
 
-    public function index(Request $request)
+    public function index()
     {
         $query = Alumni::query();
-        if ($request->filled('jurusan')) {
-            $query->where('jurusan', $request->jurusan);
-        }
-
-        if ($request->filled('angkatan')) {
-            $query->where('angkatan', $request->angkatan);
-        }
         $Alumni = $query->get();
         return new AlumniResource(true, 'List Data Alumni', $Alumni);
-        // return view('Alumni.Alumni', [
-        //     'title' => 'Data Alumni',
-        //     'alumni' => $Alumni,
-        //     'angkatan' => Alumni::select('angkatan')->distinct()->get(),
-        //     'jurusan' => Alumni::select('jurusan')->distinct()->get(),
-        // ]);
     }
     public function Store(Request $request)
     {
@@ -56,10 +43,10 @@ class AlumniController extends Controller
 
         return new AlumniResource(true, 'Alumni Berhasil Ditambahkan', $alumni);
     }
-    public function hapus($id)
+    public function destroy($id)
     {
-        Alumni::findOrFail($id)->delete();
-        return redirect()->route('Alumni.Alumni');
+        $alumni = Alumni::findOrFail($id)->delete();
+        return new AlumniResource(true, 'Alumni Berhasil terhapus', $alumni);
     }
     public function show($id)
     {

@@ -5,64 +5,55 @@ namespace App\Http\Controllers;
 use App\Models\Alumni;
 use App\Models\Prestasi;
 use Illuminate\Http\Request;
+use App\Http\Resources\AlumniResource;
+use Illuminate\Support\Facades\Validator;
 
 class PrestasiController extends Controller
 {
-    public function index(Request $request, $id = null)
+
+    public function index()
     {
-        $query = Prestasi::with('alumni');
-        $angkatanFilter = $request->query('angkatan');
-        $jurusanFilter = $request->query('jurusan');
-        $angkatan = Alumni::select('angkatan');
-        $jurusan = Alumni::select('jurusan');
-        if ($jurusanFilter) {
-            $query->whereHas('alumni', function ($q) use ($jurusanFilter) {
-                $q->where('jurusan', $jurusanFilter);
-            });
-        }
+        // Ambil semua prestasi beserta data alumni yang terkait
+        $prestasi = Prestasi::with('alumni')->get();
 
-        if ($angkatanFilter) {
-            $query->whereHas('alumni', function ($q) use ($angkatanFilter) {
-                $q->where('angkatan', $angkatanFilter);
-            });
-        }
-        if ($id) {
-            $query->where('alumni_id', $id);
-        }
-        $prestasi = $query->get();
-
-        $alumniQuery = Alumni::query();
-        if ($jurusanFilter) {
-            $alumniQuery->where('jurusan', $jurusanFilter);
-        }
-        if ($angkatanFilter) {
-            $alumniQuery->where('angkatan', $angkatanFilter);
-        }
-        $alumni = $alumniQuery->get();
-
-        return view('Prestasi.Prestasi', [
-            'title' => 'Detail Prestasi',
-            'prestasi' => $prestasi,
-            'angkatan' => $angkatan->distinct()->get(),
-            'jurusan' => $jurusan->distinct()->get(),
-            'angkatan1' => $angkatanFilter,
-            'jurusan1' => $jurusanFilter,
-            'alumni' => $alumni,
-            'id' => $id,
-        ]);
+        // Kirim response menggunakan PrestasiResource (bisa kamu buat resource-nya)
+        return new AlumniResource(true, 'Prestasi Berhasil Ditampilkan', $prestasi);
     }
-    public function tambah(Request $request)
+    public function show($id)
     {
-        $request->validate([
+        $prestasi = Prestasi::with('alumni')->where('alumni_id', $id)->get();
+
+        // Jika ingin cek apakah alumni ada (opsional)
+        if ($prestasi->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Prestasi untuk alumni dengan id ' . $id . ' tidak ditemukan',
+                'data' => []
+            ], 404);
+        }
+
+        // Kirim response menggunakan AlumniResource
+        return new AlumniResource(true, 'Prestasi Berhasil Ditampilkan untuk Alumni ID ' . $id, $prestasi);
+    }
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'nama_prestasi' => 'required|string|max:255',
             'grade' => 'required|integer'
         ]);
-        Prestasi::create([
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi Gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        $prestasi = Prestasi::create([
             'alumni_id' => $request->alumni_id,
             'prestasi' => $request->nama_prestasi,
             'grade' => $request->grade,
         ]);
-        return redirect()->back();
+        return new AlumniResource(true, 'Prestasi Berhasil Ditambahkan', $prestasi);
     }
     public function update(Request $request, $id)
     {
@@ -73,9 +64,9 @@ class PrestasiController extends Controller
         ]);
         return redirect()->route('Prestasi.Prestasi');
     }
-    public function hapus($id)
+    public function destroy($id)
     {
-        Prestasi::findOrFail($id)->delete();
-        return redirect()->route('Prestasi.Prestasi');
+        $prestasi = Prestasi::findOrFail($id)->delete();
+        return new AlumniResource(true, 'Prestasi Berhasil Dihapus', $prestasi);
     }
 }
