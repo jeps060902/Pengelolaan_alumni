@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alumni;
 use App\Models\Prestasi;
 use Illuminate\Http\Request;
 use App\Http\Resources\AlumniResource;
