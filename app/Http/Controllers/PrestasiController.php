@@ -57,12 +57,27 @@ class PrestasiController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $prestasi = Prestasi::findOrFail($id);
+        $prestasi = Prestasi::find($id);
+        if (!$prestasi) {
+            return response()->json(['message' => 'Data alumni tidak ditemukan'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'nama_prestasi' => 'required|string|max:255',
+            'grade' => 'required|integer'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi Gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        }
         $prestasi->update([
             'prestasi' => $request->nama_prestasi,
             'grade' => $request->grade,
         ]);
-        return redirect()->route('Prestasi.Prestasi');
+        return new AlumniResource(true, 'Alumni Berhasil diedit', $prestasi);
     }
     public function destroy($id)
     {
