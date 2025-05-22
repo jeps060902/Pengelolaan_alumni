@@ -3,65 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Models\Karir;
-use App\Models\Alumni;
 use Illuminate\Http\Request;
+use App\Http\Resources\AlumniResource;
+use Illuminate\Support\Facades\Validator;
 
 class KarirController extends Controller
 {
-    public function index(Request $request, $id = null)
+    public function index()
     {
-        $query = Karir::with('alumni');
-        $angkatanFilter = $request->query('angkatan');
-        $jurusanFilter = $request->query('jurusan');
-        $angkatan = Alumni::select('angkatan');
-        $jurusan = Alumni::select('jurusan');
-        if ($jurusanFilter) {
-            $query->whereHas('alumni', function ($q) use ($jurusanFilter) {
-                $q->where('jurusan', $jurusanFilter);
-            });
-        }
-
-        if ($angkatanFilter) {
-            $query->whereHas('alumni', function ($q) use ($angkatanFilter) {
-                $q->where('angkatan', $angkatanFilter);
-            });
-        }
-        if ($id) {
-            $query->where('alumni_id', $id);
-        }
-        $karir = $query->get();
-
-        $alumniQuery = Alumni::query();
-        if ($jurusanFilter) {
-            $alumniQuery->where('jurusan', $jurusanFilter);
-        }
-        if ($angkatanFilter) {
-            $alumniQuery->where('angkatan', $angkatanFilter);
-        }
-        $alumni = $alumniQuery->get();
-
-        return view('Karir.Karir', [
-            'title' => 'Detail Karir',
-            'karir' => $karir,
-            'angkatan' => $angkatan->distinct()->get(),
-            'jurusan' => $jurusan->distinct()->get(),
-            'angkatan1' => $angkatanFilter,
-            'jurusan1' => $jurusanFilter,
-            'alumni' => $alumni,
-            'id' => $id,
-        ]);
+        $karir = Karir::with('alumni')->get();
+        return new AlumniResource(true, 'Prestasi Berhasil Ditambahkan', $karir);
     }
-    public function tambah(Request $request)
+    public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'tempat' => 'required|string|max:255',
+            'posisi' => 'required|string|max:255',
+            'status' => 'required|string',
+            'tahun_mulai' => 'required|integer|min:1900|max:' . date('Y'),
+            'tahun_selesai' => 'integer|min:1900|max:' . date('Y'),
+        ]);
 
-        Karir::create([
+        $validator->after(function ($validator) use ($request) {
+            if ($request->tahun_mulai > $request->tahun_selesai) {
+                $validator->errors()->add('tahun_mulai', 'Tahun mulai tidak boleh lebih besar dari tahun selesai.');
+            }
+        });
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $karir = Karir::create([
             'alumni_id' => $request->alumni_id,
-            'tempat' => $request->nama_tempat,
-            'posisi' => $request->nama_posisi,
-            'status' => $request->Status,
+            'tempat' => $request->tempat,
+            'posisi' => $request->posisi,
+            'status' => $request->status,
             'tahun_mulai' => $request->tahun_mulai,
             'tahun_selesai' => $request->tahun_selesai,
         ]);
-        return redirect()->back();
+        return new AlumniResource(true, 'Prestasi Berhasil Ditambahkan', $karir);
     }
 }
