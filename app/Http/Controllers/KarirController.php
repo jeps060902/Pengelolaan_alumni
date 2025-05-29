@@ -12,7 +12,23 @@ class KarirController extends Controller
     public function index()
     {
         $karir = Karir::with('alumni')->get();
-        return new AlumniResource(true, 'Prestasi Berhasil Ditambahkan', $karir);
+        return new AlumniResource(true, 'Karir Berhasil Ditambahkan', $karir);
+    }
+    public function show($id)
+    {
+        $karir = Karir::with('alumni')->where('alumni_id', $id)->get();
+
+        // Jika ingin cek apakah alumni ada (opsional)
+        if ($karir->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Karir untuk alumni dengan id ' . $id . ' tidak ditemukan',
+                'data' => []
+            ], 404);
+        }
+
+        // Kirim response menggunakan AlumniResource
+        return new AlumniResource(true, 'Karir Berhasil Ditampilkan untuk Alumni ID ' . $id, $karir);
     }
     public function store(Request $request)
     {
